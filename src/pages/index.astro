@@ -1,0 +1,11 @@
+---
+import Portfolio from '@components/Portfolio';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { translations } from '@data/translations';
+
+const initialLang = 'fr';
+const meta = translations[initialLang];
+---
+<BaseLayout title={meta.meta.title} description={meta.meta.description} lang={initialLang}>
+  <Portfolio client:load />
+</BaseLayout>
