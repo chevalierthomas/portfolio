@@ -479,20 +479,9 @@ main {
 }
 
 .project-grid {
-  display: flex;
+  display: grid;
   gap: 1.5rem;
-  overflow-x: auto;
-  padding: 0.5rem 0 0.5rem 0.25rem;
-  scroll-snap-type: x mandatory;
-}
-
-.project-grid::-webkit-scrollbar {
-  height: 6px;
-}
-
-.project-grid::-webkit-scrollbar-thumb {
-  background: rgba(255, 122, 184, 0.35);
-  border-radius: 999px;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .project-card {
@@ -503,8 +492,7 @@ main {
   display: grid;
   gap: 0.9rem;
   transition: transform var(--transition), box-shadow var(--transition);
-  flex: 0 0 320px;
-  scroll-snap-align: start;
+  width: 100%;
 }
 
 .project-card:hover,
@@ -554,19 +542,6 @@ main {
 .project-link:focus-visible {
   background: var(--color-accent);
   color: #04060d;
-}
-
-@media (min-width: 1100px) {
-  .project-grid {
-    flex-wrap: wrap;
-    overflow-x: visible;
-    padding: 0;
-  }
-
-  .project-card {
-    flex: 1 1 calc(50% - 1.5rem);
-    max-width: 420px;
-  }
 }
 
 .project-subtitle {
