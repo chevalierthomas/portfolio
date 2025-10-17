@@ -10,7 +10,6 @@ import { translations } from '@data/translations';
 import { siteConfig } from '@data/site';
 
 const birthDate = new Date(siteConfig.birthDate);
-const socialLinks = [...siteConfig.socials];
 const contactLinks = [...siteConfig.socials];
 const contactEmail = siteConfig.email;
 const ownerName = siteConfig.name;
@@ -84,14 +83,12 @@ const Portfolio = () => {
   };
 
   const profileImage = siteConfig.profileImage || '/profile-placeholder.svg';
+  const profileHighlights = t.about.highlights;
 
   return (
     <div className="page">
       <header className="hero" id="top">
         <nav className="nav">
-          <a className="logo" href="#top" aria-label="Thomas Chevalier">
-            <span>TC</span>
-          </a>
           <div className="nav-links">
             <a href="#about">{t.nav.about}</a>
             <a href="#experience">{t.nav.experience}</a>
@@ -123,18 +120,6 @@ const Portfolio = () => {
             <p className="hero-greeting">{t.hero.greeting}</p>
             <h1 className="hero-title">{t.hero.title}</h1>
             <p className="hero-subtitle">{t.hero.subtitle}</p>
-            <div className="hero-meta">
-              <a className="hero-link" href={`mailto:${contactEmail}`}>
-                {contactEmail}
-              </a>
-              <div className="hero-socials">
-                {socialLinks.map((link) => (
-                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
           <div className="hero-portrait">
             <div className="portrait-frame">
@@ -145,12 +130,18 @@ const Portfolio = () => {
       </header>
 
       <main>
-        <section id="about" className="card">
+        <section id="about" className="card profile-card">
           <div className="card-header">
             <h2>{t.about.title}</h2>
           </div>
           <div className="card-body about-grid">
-            <p className="about-intro">{t.about.intro}</p>
+            <ul className="about-highlights">
+              {profileHighlights.map((item) => (
+                <li key={item} className="about-highlight">
+                  {item}
+                </li>
+              ))}
+            </ul>
             <div className="about-details">
               <dl>
                 <div>
@@ -160,29 +151,10 @@ const Portfolio = () => {
                   </dd>
                 </div>
                 <div>
-                  <dt>{t.about.emailLabel}</dt>
-                  <dd>
-                    <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                  </dd>
-                </div>
-                <div>
                   <dt>{t.about.locationLabel}</dt>
                   <dd>{t.about.locationValue}</dd>
                 </div>
-                <div>
-                  <dt>{t.about.socialsLabel}</dt>
-                  <dd className="about-socials">
-                    {socialLinks.map((link) => (
-                      <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
-                        {link.label}
-                      </a>
-                    ))}
-                  </dd>
-                </div>
               </dl>
-              <a className="resume-button" href="#contact">
-                {t.about.downloadResume}
-              </a>
             </div>
           </div>
         </section>

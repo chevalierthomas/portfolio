@@ -49,13 +49,10 @@ export interface Translation {
   };
   about: {
     title: string;
-    intro: string;
+    highlights: string[];
     birthDateLabel: string;
-    emailLabel: string;
     locationLabel: string;
     locationValue: string;
-    socialsLabel: string;
-    downloadResume: string;
   };
   experience: {
     title: string;
@@ -110,14 +107,14 @@ export const translations: Record<Language, Translation> = {
     },
     about: {
       title: 'Profil',
-      intro:
-        'Je construis des produits numériques soignés où l’IA rencontre le design. Curieux de nature, je m’épanouis à transformer des idées complexes en expériences accessibles.',
+      highlights: [
+        'IA & design, main dans la main',
+        'Expériences web soignées et humaines',
+        'Toujours prêt à explorer de nouvelles idées'
+      ],
       birthDateLabel: 'Âge',
-      emailLabel: 'E-mail',
       locationLabel: 'Basé à',
-      locationValue: 'France',
-      socialsLabel: 'Réseaux',
-      downloadResume: 'Télécharger le CV'
+      locationValue: 'Reims, France'
     },
     experience: {
       title: 'Expériences professionnelles',
@@ -250,14 +247,14 @@ export const translations: Record<Language, Translation> = {
     },
     about: {
       title: 'Profile',
-      intro:
-        'I build refined digital products where AI meets design. Naturally curious, I love turning complex ideas into accessible experiences.',
+      highlights: [
+        'Where AI meets delightful design',
+        'Thoughtful web experiences with a human touch',
+        'Curious mind, always exploring'
+      ],
       birthDateLabel: 'Age',
-      emailLabel: 'E-mail',
       locationLabel: 'Based in',
-      locationValue: 'France',
-      socialsLabel: 'Socials',
-      downloadResume: 'Download résumé'
+      locationValue: 'Reims, France'
     },
     experience: {
       title: 'Professional experience',
