@@ -84,6 +84,7 @@ const Portfolio = () => {
 
   const profileImage = siteConfig.profileImage || '/profile-placeholder.svg';
   const profileHighlights = t.about.highlights;
+  const projectLinkLabel = t.projects.linkLabel;
 
   return (
     <div className="page">
@@ -232,8 +233,20 @@ const Portfolio = () => {
             {filteredProjects.map((project) => (
               <article key={project.title} className="project-card">
                 <div className="project-card-header">
-                  <h3>{project.title}</h3>
-                  <span className="project-category">{filters[project.category](t)}</span>
+                  <div className="project-card-title">
+                    <h3>{project.title}</h3>
+                    <span className="project-category">{filters[project.category](t)}</span>
+                  </div>
+                  {project.link && (
+                    <a
+                      className="project-link"
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {projectLinkLabel}
+                    </a>
+                  )}
                 </div>
                 <p className="project-subtitle">{project.subtitle}</p>
                 <ul>

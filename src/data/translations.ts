@@ -28,6 +28,7 @@ export interface Project {
   description: string[];
   technologies: string[];
   category: ProjectCategory;
+  link?: string;
 }
 
 export interface Translation {
@@ -67,6 +68,7 @@ export interface Translation {
     filterAll: string;
     filterAcademic: string;
     filterPersonal: string;
+    linkLabel: string;
     items: Project[];
   };
   languages: {
@@ -167,6 +169,7 @@ export const translations: Record<Language, Translation> = {
       filterAll: 'Tous',
       filterAcademic: 'Universitaires',
       filterPersonal: 'Personnels',
+      linkLabel: 'Voir le projet',
       items: [
         {
           title: 'SentiMarket',
@@ -176,7 +179,8 @@ export const translations: Record<Language, Translation> = {
             'Analyse des corrélations entre les nouvelles et les cours boursiers grâce à FinBERT.'
           ],
           technologies: ['Vue.js', 'Node.js', 'Python', 'FinBERT', 'API financières'],
-          category: 'personal'
+          category: 'personal',
+          link: 'https://github.com/chevalierthomas/SentiMarket'
         },
         {
           title: 'Jeux Olympiques — Cérémonie d’ouverture',
@@ -196,6 +200,17 @@ export const translations: Record<Language, Translation> = {
             'API REST pour exposer les résultats analytiques.'
           ],
           technologies: ['Python', 'Pandas', 'Scikit-learn', 'API REST'],
+          category: 'academic'
+        },
+        {
+          title: 'Campus Connect iOS',
+          subtitle: 'Application native SwiftUI reliée à une API',
+          description: [
+            'Parcours mobile complet pour les étudiants : actualités, événements et services.',
+            'Intégration d’une API REST sécurisée avec authentification et synchronisation temps réel.',
+            'Interface dynamique en SwiftUI avec gestion hors ligne et animations fluides.'
+          ],
+          technologies: ['Swift', 'SwiftUI', 'REST API', 'Firebase'],
           category: 'academic'
         }
       ]
@@ -307,6 +322,7 @@ export const translations: Record<Language, Translation> = {
       filterAll: 'All',
       filterAcademic: 'Academic',
       filterPersonal: 'Personal',
+      linkLabel: 'View project',
       items: [
         {
           title: 'SentiMarket',
@@ -316,7 +332,8 @@ export const translations: Record<Language, Translation> = {
             'Correlates breaking news with stock prices using FinBERT.'
           ],
           technologies: ['Vue.js', 'Node.js', 'Python', 'FinBERT', 'Financial APIs'],
-          category: 'personal'
+          category: 'personal',
+          link: 'https://github.com/chevalierthomas/SentiMarket'
         },
         {
           title: 'Olympic Games — Opening Ceremony',
@@ -336,6 +353,17 @@ export const translations: Record<Language, Translation> = {
             'REST API to serve analytical insights.'
           ],
           technologies: ['Python', 'Pandas', 'Scikit-learn', 'REST API'],
+          category: 'academic'
+        },
+        {
+          title: 'Campus Connect iOS',
+          subtitle: 'Native SwiftUI app powered by an API',
+          description: [
+            'End-to-end mobile experience for students with news, events and services.',
+            'Secured REST API integration with authentication and real-time sync.',
+            'SwiftUI interface with offline mode, caching and fluid animations.'
+          ],
+          technologies: ['Swift', 'SwiftUI', 'REST API', 'Firebase'],
           category: 'academic'
         }
       ]

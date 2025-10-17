@@ -479,9 +479,20 @@ main {
 }
 
 .project-grid {
-  display: grid;
+  display: flex;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  overflow-x: auto;
+  padding: 0.5rem 0 0.5rem 0.25rem;
+  scroll-snap-type: x mandatory;
+}
+
+.project-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.project-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 122, 184, 0.35);
+  border-radius: 999px;
 }
 
 .project-card {
@@ -492,6 +503,8 @@ main {
   display: grid;
   gap: 0.9rem;
   transition: transform var(--transition), box-shadow var(--transition);
+  flex: 0 0 320px;
+  scroll-snap-align: start;
 }
 
 .project-card:hover,
@@ -504,7 +517,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .project-card-header h3 {
@@ -512,11 +525,48 @@ main {
   font-size: 1.1rem;
 }
 
+.project-card-title {
+  display: grid;
+  gap: 0.35rem;
+}
+
 .project-category {
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-muted);
+}
+
+.project-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(255, 122, 184, 0.15);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  transition: background var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  background: var(--color-accent);
+  color: #04060d;
+}
+
+@media (min-width: 1100px) {
+  .project-grid {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding: 0;
+  }
+
+  .project-card {
+    flex: 1 1 calc(50% - 1.5rem);
+    max-width: 420px;
+  }
 }
 
 .project-subtitle {
