@@ -1,7 +1,7 @@
-/// <reference types="astro/client" />
+/// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly PUBLIC_SPOTIFY_EMBED_URL?: string;
+  readonly VITE_SPOTIFY_EMBED_URL?: string;
 }
 
 interface ImportMeta {

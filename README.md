@@ -1,6 +1,6 @@
 # Thomas Chevalier — Portfolio
 
-Portfolio bilingue moderne construit avec [Astro](https://astro.build/) et React pour présenter le profil de Thomas Chevalier.
+Portfolio bilingue moderne construit avec [React](https://react.dev/) et [Vite](https://vitejs.dev/) pour présenter le profil de Thomas Chevalier.
 
 ## Démarrage
 
@@ -9,13 +9,14 @@ npm install
 npm run dev
 ```
 
-Le site est accessible sur `http://localhost:4321` par défaut.
+Le site est accessible sur `http://localhost:5173` par défaut.
 
 ## Configuration
 
-- Placez la photo `thomas.png` (ou tout autre fichier) dans `public/` puis mettez à jour `profileImage` dans `src/data/site.ts`. Par défaut, un avatar vectoriel est affiché pour éviter d’inclure des fichiers binaires.
+- Placez la photo `thomas.png` (ou tout autre fichier) dans `public/` puis mettez à jour `profileImage` dans `src/data/site.ts`.
+  Par défaut, un avatar vectoriel est affiché pour éviter d’inclure des fichiers binaires.
 - Ajustez également `ogImage` dans `src/data/site.ts` si vous générez votre propre visuel de partage.
-- `PUBLIC_SPOTIFY_EMBED_URL` : définissez cette variable d’environnement pour afficher le widget Spotify.
+- `VITE_SPOTIFY_EMBED_URL` : définissez cette variable d’environnement pour afficher le widget Spotify.
 - Les contenus FR/EN sont centralisés dans `src/data/translations.ts` pour un ajout simple de nouvelles expériences ou projets.
 
 ## Scripts

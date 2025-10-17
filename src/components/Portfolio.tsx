@@ -15,7 +15,7 @@ const contactLinks = [...siteConfig.socials];
 const contactEmail = siteConfig.email;
 const ownerName = siteConfig.name;
 
-const spotifyEmbedUrl = import.meta.env.PUBLIC_SPOTIFY_EMBED_URL;
+const spotifyEmbedUrl = import.meta.env.VITE_SPOTIFY_EMBED_URL;
 
 const getAge = () => {
   const today = new Date();
