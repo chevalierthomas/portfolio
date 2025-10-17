@@ -183,6 +183,13 @@ a:focus {
   max-width: 36ch;
 }
 
+.hero-location {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  max-width: 36ch;
+}
+
 .hero-portrait {
   display: flex;
   justify-content: flex-end;

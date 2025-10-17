@@ -29,6 +29,7 @@ export interface Project {
   technologies: string[];
   category: ProjectCategory;
   link?: string;
+  year: string;
 }
 
 export interface Translation {
@@ -46,6 +47,7 @@ export interface Translation {
     greeting: string;
     title: string;
     subtitle: string;
+    location: string;
     callToAction: string;
   };
   about: {
@@ -104,7 +106,8 @@ export const translations: Record<Language, Translation> = {
       greeting: 'Bonjour, je suis',
       title: 'Thomas Chevalier',
       subtitle:
-        'Développeur web et passionné par l’intelligence artificielle. J’aime concevoir des expériences numériques élégantes et utiles.',
+        'Je suis un étudiant de {{age}} ans en intelligence artificielle, curieux et en quête de nouvelles opportunités.',
+      location: 'Actuellement à Reims, France.',
       callToAction: 'Explorer mon travail'
     },
     about: {
@@ -159,7 +162,7 @@ export const translations: Record<Language, Translation> = {
         },
         {
           title: 'BUT Informatique',
-          school: 'IUT de Belfort-Montbéliard',
+          school: 'IUT Nord Franche-Comté',
           period: '2022 — 2025'
         }
       ]
@@ -180,7 +183,8 @@ export const translations: Record<Language, Translation> = {
           ],
           technologies: ['Vue.js', 'Node.js', 'Python', 'FinBERT', 'API financières'],
           category: 'personal',
-          link: 'https://github.com/chevalierthomas/SentiMarket'
+          link: 'https://github.com/chevalierthomas/SentiMarket',
+          year: '2025'
         },
         {
           title: 'Jeux Olympiques — Cérémonie d’ouverture',
@@ -190,7 +194,8 @@ export const translations: Record<Language, Translation> = {
             'Collaboration agile avec intégration continue et API Node.js.'
           ],
           technologies: ['Vue.js', 'Node.js', 'Axios', 'GitHub', 'Agile'],
-          category: 'academic'
+          category: 'academic',
+          year: '2023'
         },
         {
           title: 'Application de gestion de course à pied',
@@ -200,18 +205,20 @@ export const translations: Record<Language, Translation> = {
             'API REST pour exposer les résultats analytiques.'
           ],
           technologies: ['Python', 'Pandas', 'Scikit-learn', 'API REST'],
-          category: 'academic'
+          category: 'academic',
+          year: '2024'
         },
         {
-          title: 'Campus Connect iOS',
-          subtitle: 'Application native SwiftUI reliée à une API',
+          title: 'Application iOS de e-commerce de chaussures d’escalade',
+          subtitle: 'Expérience d’achat spécialisée pour grimpeurs',
           description: [
-            'Parcours mobile complet pour les étudiants : actualités, événements et services.',
-            'Intégration d’une API REST sécurisée avec authentification et synchronisation temps réel.',
-            'Interface dynamique en SwiftUI avec gestion hors ligne et animations fluides.'
+            'Parcours mobile complet pour découvrir et acheter des chaussures d’escalade spécialisées.',
+            'Catalogue connecté à une API REST avec gestion des stocks et des avis clients.',
+            'Interface SwiftUI soignée avec paiement sécurisé et mode hors ligne.'
           ],
           technologies: ['Swift', 'SwiftUI', 'REST API', 'Firebase'],
-          category: 'academic'
+          category: 'academic',
+          year: '2024'
         }
       ]
     },
@@ -227,7 +234,7 @@ export const translations: Record<Language, Translation> = {
       items: [
         'Photographie',
         'Voyages et découverte du monde',
-        'Économie (The Economist)',
+        'Économie',
         'Musique',
         'Bricolage (électronique, développement, DIY)',
         'Comprendre le monde via les médias et la technologie'
@@ -257,7 +264,8 @@ export const translations: Record<Language, Translation> = {
       greeting: 'Hello, I am',
       title: 'Thomas Chevalier',
       subtitle:
-        'Web developer passionate about artificial intelligence. I craft elegant and meaningful digital experiences.',
+        'I am a {{age}}-year-old AI student, curious and eager to explore new opportunities.',
+      location: 'Currently based in Reims, France.',
       callToAction: 'See my work'
     },
     about: {
@@ -312,7 +320,7 @@ export const translations: Record<Language, Translation> = {
         },
         {
           title: 'B.Eng — Computer Science (BUT Informatique)',
-          school: 'IUT de Belfort-Montbéliard',
+          school: 'IUT Nord Franche-Comté',
           period: '2022 — 2025'
         }
       ]
@@ -333,7 +341,8 @@ export const translations: Record<Language, Translation> = {
           ],
           technologies: ['Vue.js', 'Node.js', 'Python', 'FinBERT', 'Financial APIs'],
           category: 'personal',
-          link: 'https://github.com/chevalierthomas/SentiMarket'
+          link: 'https://github.com/chevalierthomas/SentiMarket',
+          year: '2025'
         },
         {
           title: 'Olympic Games — Opening Ceremony',
@@ -343,7 +352,8 @@ export const translations: Record<Language, Translation> = {
             'Agile collaboration with continuous integration and Node.js APIs.'
           ],
           technologies: ['Vue.js', 'Node.js', 'Axios', 'GitHub', 'Agile'],
-          category: 'academic'
+          category: 'academic',
+          year: '2023'
         },
         {
           title: 'Running insights app',
@@ -353,18 +363,20 @@ export const translations: Record<Language, Translation> = {
             'REST API to serve analytical insights.'
           ],
           technologies: ['Python', 'Pandas', 'Scikit-learn', 'REST API'],
-          category: 'academic'
+          category: 'academic',
+          year: '2024'
         },
         {
-          title: 'Campus Connect iOS',
-          subtitle: 'Native SwiftUI app powered by an API',
+          title: 'Climbing shoes e-commerce iOS app',
+          subtitle: 'Specialised shopping experience for climbers',
           description: [
-            'End-to-end mobile experience for students with news, events and services.',
-            'Secured REST API integration with authentication and real-time sync.',
-            'SwiftUI interface with offline mode, caching and fluid animations.'
+            'Full mobile journey to explore and buy specialised climbing shoes.',
+            'REST API catalogue with stock management and customer reviews.',
+            'Polished SwiftUI interface with secure checkout and offline support.'
           ],
           technologies: ['Swift', 'SwiftUI', 'REST API', 'Firebase'],
-          category: 'academic'
+          category: 'academic',
+          year: '2024'
         }
       ]
     },
@@ -380,7 +392,7 @@ export const translations: Record<Language, Translation> = {
       items: [
         'Photography',
         'Travelling and world discovery',
-        'Economics (The Economist)',
+        'Economics',
         'Music',
         'DIY & tinkering (electronics, coding, making)',
         'Understanding the world through media and technology'

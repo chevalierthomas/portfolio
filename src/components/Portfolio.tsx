@@ -78,12 +78,16 @@ const Portfolio = () => {
     return t.projects.items.filter((project: Project) => project.category === projectFilter);
   }, [projectFilter, t.projects.items]);
 
+  const heroSubtitle = useMemo(
+    () => t.hero.subtitle.replace('{{age}}', age.toString()),
+    [age, t.hero.subtitle]
+  );
+
   const handleLanguageToggle = (lang: Language) => () => {
     setLanguage(lang);
   };
 
   const profileImage = siteConfig.profileImage || '/profile-placeholder.svg';
-  const profileHighlights = t.about.highlights;
   const projectLinkLabel = t.projects.linkLabel;
 
   return (
@@ -91,7 +95,6 @@ const Portfolio = () => {
       <header className="hero" id="top">
         <nav className="nav">
           <div className="nav-links">
-            <a href="#about">{t.nav.about}</a>
             <a href="#experience">{t.nav.experience}</a>
             <a href="#projects">{t.nav.projects}</a>
             <a href="#contact">{t.nav.contact}</a>
@@ -120,7 +123,8 @@ const Portfolio = () => {
           <div className="hero-text">
             <p className="hero-greeting">{t.hero.greeting}</p>
             <h1 className="hero-title">{t.hero.title}</h1>
-            <p className="hero-subtitle">{t.hero.subtitle}</p>
+            <p className="hero-subtitle">{heroSubtitle}</p>
+            <p className="hero-location">{t.hero.location}</p>
           </div>
           <div className="hero-portrait">
             <div className="portrait-frame">
@@ -131,35 +135,6 @@ const Portfolio = () => {
       </header>
 
       <main>
-        <section id="about" className="card profile-card">
-          <div className="card-header">
-            <h2>{t.about.title}</h2>
-          </div>
-          <div className="card-body about-grid">
-            <ul className="about-highlights">
-              {profileHighlights.map((item) => (
-                <li key={item} className="about-highlight">
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="about-details">
-              <dl>
-                <div>
-                  <dt>{t.about.birthDateLabel}</dt>
-                  <dd>
-                    {age} {language === 'fr' ? 'ans' : 'years old'}
-                  </dd>
-                </div>
-                <div>
-                  <dt>{t.about.locationLabel}</dt>
-                  <dd>{t.about.locationValue}</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </section>
-
         <section id="experience" className="card">
           <div className="card-header">
             <h2>{t.experience.title}</h2>
@@ -235,7 +210,9 @@ const Portfolio = () => {
                 <div className="project-card-header">
                   <div className="project-card-title">
                     <h3>{project.title}</h3>
-                    <span className="project-category">{filters[project.category](t)}</span>
+                    <span className="project-category">
+                      {project.year} · {filters[project.category](t)}
+                    </span>
                   </div>
                   {project.link && (
                     <a
