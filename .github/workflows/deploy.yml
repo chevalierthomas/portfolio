@@ -5,6 +5,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  PROJECT_DIR: "."        # change si ton code est dans un sous-dossier (ex: "frontend")
+  ARCHIVE_NAME: "site.tgz"
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -15,33 +19,55 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
+      - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ secrets.NODE_VERSION || '20' }}
+          node-version: '20'
           cache: 'npm'
 
-      - name: Install deps
-        run: npm ci
+      - name: Enable Corepack (yarn/pnpm support)
+        run: corepack enable
+
+      - name: Install deps (npm/yarn/pnpm + lockfile fallback)
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            echo "Detected pnpm"
+            corepack prepare pnpm@latest --activate
+            pnpm install --frozen-lockfile
+          elif [ -f yarn.lock ]; then
+            echo "Detected yarn"
+            yarn install --frozen-lockfile
+          elif [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then
+            echo "Detected npm with lockfile"
+            npm ci
+          else
+            echo "No lockfile found -> npm install"
+            npm install
+          fi
 
       - name: Build
-        run: npm run build
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: npm run build || yarn build || pnpm build
 
       - name: Create release archive
+        working-directory: ${{ env.PROJECT_DIR }}
         run: |
           ts=$(date +'%Y%m%d%H%M%S')
           echo "RELEASE_NAME=release-$ts" >> $GITHUB_ENV
           mkdir -p artifact
-          tar -C dist -czf artifact/site.tgz .
+          # Vite/React build dans "dist/" par défaut
+          tar -C dist -czf artifact/${{ env.ARCHIVE_NAME }} .
 
       - name: Prepare SSH key
         run: |
           echo "${{ secrets.VPS_SSH_KEY }}" > key
           chmod 600 key
 
-      - name: Upload to server
+      - name: Upload to server (rsync /tmp)
         run: |
-          rsync -avz -e "ssh -i key -o StrictHostKeyChecking=no" artifact/site.tgz \
+          rsync -avz -e "ssh -i key -o StrictHostKeyChecking=no" \
+            "${{ env.PROJECT_DIR }}/artifact/${{ env.ARCHIVE_NAME }}" \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/tmp/
 
       - name: Activate release atomically
@@ -50,18 +76,18 @@ jobs:
           set -e
           RELEASE_DIR="${{ secrets.VPS_PATH }}/releases/${{ env.RELEASE_NAME }}"
           mkdir -p "$RELEASE_DIR"
-          tar -xzf /tmp/site.tgz -C "$RELEASE_DIR"
-          rm -f /tmp/site.tgz
+          tar -xzf /tmp/${{ env.ARCHIVE_NAME }} -C "$RELEASE_DIR"
+          rm -f /tmp/${{ env.ARCHIVE_NAME }}
 
           # Permissions propres
-          chgrp -R www-data "$RELEASE_DIR"
+          chgrp -R www-data "$RELEASE_DIR" || true
           find "$RELEASE_DIR" -type d -exec chmod 755 {} \;
           find "$RELEASE_DIR" -type f -exec chmod 644 {} \;
 
-          # Bascule atomique
+          # Bascule atomique sur la nouvelle release
           ln -sfn "$RELEASE_DIR" "${{ secrets.VPS_PATH }}/current"
 
-          # (Optionnel) garder seulement les 10 dernières releases
+          # Garder seulement les 10 dernières releases
           cd "${{ secrets.VPS_PATH }}/releases"
           ls -1dt release-* 2>/dev/null | tail -n +11 | xargs -r rm -rf
           EOF
