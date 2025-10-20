@@ -1,0 +1,67 @@
+name: Deploy portfolio
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ secrets.NODE_VERSION || '20' }}
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Create release archive
+        run: |
+          ts=$(date +'%Y%m%d%H%M%S')
+          echo "RELEASE_NAME=release-$ts" >> $GITHUB_ENV
+          mkdir -p artifact
+          tar -C dist -czf artifact/site.tgz .
+
+      - name: Prepare SSH key
+        run: |
+          echo "${{ secrets.VPS_SSH_KEY }}" > key
+          chmod 600 key
+
+      - name: Upload to server
+        run: |
+          rsync -avz -e "ssh -i key -o StrictHostKeyChecking=no" artifact/site.tgz \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/tmp/
+
+      - name: Activate release atomically
+        run: |
+          ssh -i key -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<'EOF'
+          set -e
+          RELEASE_DIR="${{ secrets.VPS_PATH }}/releases/${{ env.RELEASE_NAME }}"
+          mkdir -p "$RELEASE_DIR"
+          tar -xzf /tmp/site.tgz -C "$RELEASE_DIR"
+          rm -f /tmp/site.tgz
+
+          # Permissions propres
+          chgrp -R www-data "$RELEASE_DIR"
+          find "$RELEASE_DIR" -type d -exec chmod 755 {} \;
+          find "$RELEASE_DIR" -type f -exec chmod 644 {} \;
+
+          # Bascule atomique
+          ln -sfn "$RELEASE_DIR" "${{ secrets.VPS_PATH }}/current"
+
+          # (Optionnel) garder seulement les 10 dernières releases
+          cd "${{ secrets.VPS_PATH }}/releases"
+          ls -1dt release-* 2>/dev/null | tail -n +11 | xargs -r rm -rf
+          EOF
