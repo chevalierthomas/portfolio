@@ -3,7 +3,7 @@ export const siteConfig = {
   email: 'thomchevalier49@gmail.com',
   birthDate: '2003-01-23',
   baseUrl: 'https://thomas-chevalier.dev',
-  profileImage: '/profile-placeholder.svg',
+  profileImage: '/thomas.jpeg',
   ogImage: '/og-image.svg',
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/thomchev/' },
