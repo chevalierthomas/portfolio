@@ -6,6 +6,7 @@ Portfolio bilingue moderne construit avec [React](https://react.dev/) et [Vite](
 
 ```bash
 npm install
+nvm use 20
 npm run dev
 ```
 
